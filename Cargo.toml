@@ -1,0 +1,14 @@
+[package]
+name = "compute_atan2_testing"
+version = "0.1.0"
+authors = ["franz <francesco.cattoglio@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+wgpu = { git = 'https://github.com/gfx-rs/wgpu-rs', rev = '517ce3ef8d65fcd906c66d4cf2d31b8e636f452d'}
+shaderc = "0.6"
+bytemuck = "1.2"
+wgpu-subscriber = "0.1"
+pollster = "0.2"

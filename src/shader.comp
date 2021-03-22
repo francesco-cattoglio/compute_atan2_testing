@@ -1,0 +1,15 @@
+#version 450
+layout(local_size_x = 1) in;
+
+layout(set = 0, binding = 0) buffer PrimeIndices {
+    float[] values;
+}; // this is used as both input and output for convenience
+
+void main() {
+    uint index = gl_GlobalInvocationID.x;
+    float angle = values[index];
+    float x_coord = cos(angle);
+    float y_coord = sin(angle);
+    float atan2_angle = atan(y_coord, x_coord);
+    values[index] = atan2_angle;
+}
