@@ -3,7 +3,7 @@ use wgpu::util::DeviceExt;
 
 async fn run() {
     let numbers = if std::env::args().len() <= 1 {
-        let default = vec![0.0, std::f32::consts::FRAC_PI_4, std::f32::consts::FRAC_PI_2, std::f32::consts::PI];
+        let default = vec![0.01, 1.0, 0.0, 1.0, -0.01, 1.0];
         println!("No numbers were provided, defaulting to {:?}", default);
         default
     } else {
@@ -52,7 +52,8 @@ async fn execute_gpu(numbers: Vec<f32>) -> Vec<f32> {
     let cs_module = device.create_shader_module(&wgpu::ShaderModuleDescriptor{
         label: Some("compute shader module"),
         source: shader_data,
-        flags: wgpu::ShaderFlags::empty(), // could test using different flags
+        //flags: wgpu::ShaderFlags::empty(), // could test using different flags
+        flags: wgpu::ShaderFlags::EXPERIMENTAL_TRANSLATION, // could test using different flags
     });
 
     // Gets the size in bytes of the buffer.
@@ -141,7 +142,7 @@ async fn execute_gpu(numbers: Vec<f32>) -> Vec<f32> {
         cpass.set_pipeline(&compute_pipeline);
         cpass.set_bind_group(0, &bind_group, &[]);
         cpass.insert_debug_marker("compute collatz iterations");
-        cpass.dispatch(numbers.len() as u32, 1, 1); // Number of cells to run, the (x,y,z) size of item being processed
+        cpass.dispatch((numbers.len()/2) as u32, 1, 1); // Number of cells to run, the (x,y,z) size of item being processed
     }
     // Sets adds copy operation to command encoder.
     // Will copy data from storage buffer on GPU to staging buffer on CPU.

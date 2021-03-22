@@ -7,9 +7,9 @@ layout(set = 0, binding = 0) buffer PrimeIndices {
 
 void main() {
     uint index = gl_GlobalInvocationID.x;
-    float angle = values[index];
-    float x_coord = cos(angle);
-    float y_coord = sin(angle);
+    float x_coord = values[2*index];
+    float y_coord = values[2*index+1];
     float atan2_angle = atan(y_coord, x_coord);
-    values[index] = atan2_angle;
+    values[2*index] = atan2_angle;
+    values[2*index+1] = atan2_angle;
 }
